@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#07111f" />
+  <title>Fredrika Avgångslarm 2.0</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <div class="label">Fredrika Avgångslarm</div>
+        <div class="version">Version 2.0 · Trafikverket FerryAnnouncement</div>
+      </div>
+      <button id="nightBtn" class="smallbtn" type="button">Nattläge</button>
+    </header>
+
+    <section id="statusPanel" class="status warn">
+      <strong>Larm ej aktiverat.</strong> Tryck på ”Aktivera larm” innan appen lämnas obevakad.
+    </section>
+
+    <section class="card maincard">
+      <div class="routeRow">
+        <label for="routeSelect">Färjeled</label>
+        <select id="routeSelect"></select>
+      </div>
+
+      <div class="presentation">Nästa avgång</div>
+      <div id="fromHarbor" class="fromHarbor">–</div>
+      <div id="nextDeparture" class="nextDeparture">--:--</div>
+
+      <div class="countWrap">
+        <div id="countValue" class="countValue">–</div>
+        <div id="countUnit" class="countUnit">minuter</div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <button id="armBtn" class="primary" type="button">Aktivera larm</button>
+      <button id="wakeBtn" class="secondary" type="button">Håll skärmen vaken</button>
+      <button id="testFiveBtn" class="secondary" type="button">Test 5 min</button>
+      <button id="testDepartBtn" class="secondary" type="button">Test avgång</button>
+      <button id="refreshBtn" class="secondary" type="button">Hämta ny avgång</button>
+      <button id="settingsBtn" class="secondary" type="button">API-nyckel</button>
+    </section>
+
+    <section id="settings" class="settings hidden">
+      <label for="apiKey">Trafikverket API-nyckel</label>
+      <input id="apiKey" type="password" autocomplete="off" placeholder="Klistra in API-nyckel" />
+      <button id="saveKeyBtn" class="primary" type="button">Spara nyckel lokalt</button>
+      <p>Nyckeln sparas bara i denna webbläsare/enhet.</p>
+    </section>
+
+    <footer class="footer">
+      <span id="clock">--:--</span>
+      <span id="dataStatus">Ingen data hämtad</span>
+    </footer>
+  </main>
+
+  <audio id="fiveAudio" preload="auto" src="media/sounds/five-minute-tyfon.wav"></audio>
+  <audio id="departAudio" preload="auto" src="media/sounds/departure-tyfon.wav"></audio>
+
+  <script src="app.js"></script>
+</body>
+</html>
