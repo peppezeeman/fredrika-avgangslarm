@@ -1,0 +1,11 @@
+{
+  "name": "Avgångslarm",
+  "short_name": "Avgång",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#061a2f",
+  "theme_color": "#061a2f",
+  "icons": [
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"}
+  ]
+}

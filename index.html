@@ -3,65 +3,183 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#07111f" />
-  <title>Fredrika Avgångslarm 2.0</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Avgångslarm v2.2</title>
+  <meta name="theme-color" content="#061a2f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Avgång" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon-512.png" />
+  <link rel="icon" href="icon-512.png" />
+  <style>
+    :root{
+      --bg:#061a2f;--panel:#0b2744;--panel2:#102f50;--green:#35ff7a;--red:#ff3b30;--text:#f4fbff;--muted:#a9bfd2;--line:rgba(255,255,255,.14);
+    }
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--text)}
+    body{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+    .app{height:100vh;width:100vw;display:grid;grid-template-rows:auto 1fr auto;gap:10px;padding:14px;}
+    .top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;min-height:58px}
+    .titleBlock{min-width:0}.title{font-weight:900;font-size:clamp(22px,3vw,38px);letter-spacing:.2px;line-height:1}.subtitle{margin-top:6px;color:var(--muted);font-weight:700;font-size:clamp(13px,1.6vw,20px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.clock{font-variant-numeric:tabular-nums;font-weight:900;color:var(--green);font-size:clamp(34px,5vw,54px);line-height:.95;letter-spacing:1px;text-align:right;white-space:nowrap;padding-right:6px}
+    .main{min-height:0;display:grid;grid-template-columns:1fr minmax(210px,280px);gap:14px}.card{border:2px solid var(--line);background:linear-gradient(180deg,var(--panel),#071d34);border-radius:28px;box-shadow:0 12px 28px rgba(0,0,0,.22)}
+    .countCard{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px;position:relative;overflow:hidden}.label{color:var(--muted);font-weight:900;text-transform:uppercase;letter-spacing:.12em;font-size:clamp(13px,1.5vw,20px)}.departure{font-variant-numeric:tabular-nums;font-weight:950;color:var(--text);font-size:clamp(58px,9vw,128px);line-height:.95;margin:6px 0 8px}.count{font-variant-numeric:tabular-nums;font-weight:1000;color:var(--green);font-size:clamp(112px,20vw,250px);line-height:.84;text-shadow:0 0 18px rgba(53,255,122,.2)}.count.red{color:var(--red);text-shadow:0 0 18px rgba(255,59,48,.22)}.count.minus{color:#ffffff;text-shadow:none}.unit{font-weight:950;color:var(--text);font-size:clamp(20px,3.2vw,42px);letter-spacing:.06em;text-transform:uppercase;margin-top:8px}.after{margin-top:6px;color:var(--muted);font-size:clamp(14px,1.6vw,20px);font-weight:800}
+    .side{min-width:0;display:flex;flex-direction:column;gap:10px}.statusCard{padding:14px;display:flex;flex-direction:column;gap:10px}.statusRow{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:15px;font-weight:750}.statusRow b{color:var(--text)}.ok{color:var(--green)!important}.bad{color:var(--red)!important}.btns{display:grid;grid-template-columns:1fr;gap:9px}.btn{border:0;border-radius:18px;padding:16px 14px;font-weight:950;font-size:18px;color:#061a2f;background:var(--green);box-shadow:0 6px 14px rgba(0,0,0,.18)}.btn.secondary{background:#dbefff;color:#08243e}.btn.dark{background:#1d4368;color:#f4fbff;border:1px solid var(--line)}.selectPanel{display:none;position:fixed;inset:12px;background:rgba(3,15,28,.96);z-index:5;border:2px solid var(--line);border-radius:28px;padding:18px;flex-direction:column;gap:12px}.selectPanel.open{display:flex}.selectPanel h2{margin:0;font-size:28px}.routeSelect{font-size:22px;padding:18px;border-radius:18px;border:0;background:#fff;color:#001326;width:100%}.footer{display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--muted);font-size:clamp(12px,1.4vw,16px);font-weight:800;min-height:26px}.bp{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:4px;background:#0057b8;margin-right:7px;vertical-align:-5px}.bp::after{content:"";display:block;width:10px;height:10px;background:#fff}.version{white-space:nowrap;color:#d8eaff}.hidden{display:none!important}
+    @media (max-width:760px){.app{padding:10px;gap:8px}.top{min-height:42px}.main{grid-template-columns:1fr;gap:8px}.side{display:grid;grid-template-columns:1fr 1fr}.statusCard{padding:10px}.statusRow{font-size:12px}.btn{font-size:15px;padding:12px 10px}.countCard{padding:10px}.clock{font-size:clamp(30px,7vw,44px)}.departure{font-size:clamp(46px,13vw,82px)}.count{font-size:clamp(98px,30vw,180px)}.footer{font-size:12px}.unit{font-size:clamp(18px,6vw,32px)}}
+    @media (max-height:560px){.app{padding:8px;gap:6px}.subtitle{display:none}.top{min-height:36px}.clock{font-size:34px}.departure{font-size:54px;margin:2px 0}.count{font-size:118px}.unit{font-size:22px;margin-top:2px}.side{display:grid;grid-template-columns:1fr 1fr}.statusCard{padding:8px}.statusRow{display:none}.statusRow.first{display:flex}.btn{padding:10px;font-size:14px}.footer{min-height:18px;font-size:11px}}
+  </style>
 </head>
 <body>
-  <main class="app">
-    <header class="topbar">
-      <div>
-        <div class="label">Fredrika Avgångslarm</div>
-        <div class="version">Version 2.0 · Trafikverket FerryAnnouncement</div>
-      </div>
-      <button id="nightBtn" class="smallbtn" type="button">Nattläge</button>
-    </header>
+<div class="app" id="app">
+  <header class="top">
+    <div class="titleBlock">
+      <div class="title" id="routeTitle">Nästa avgång – Skenäsleden</div>
+      <div class="subtitle" id="harborText">Hämtar avgång från Trafikverket…</div>
+    </div>
+    <div class="clock" id="clock">--:--:--</div>
+  </header>
 
-    <section id="statusPanel" class="status warn">
-      <strong>Larm ej aktiverat.</strong> Tryck på ”Aktivera larm” innan appen lämnas obevakad.
+  <main class="main">
+    <section class="card countCard" id="countCard">
+      <div class="label">Avgångstid</div>
+      <div class="departure" id="departureTime">--:--</div>
+      <div class="label" id="countLabel">Tid kvar</div>
+      <div class="count" id="countValue">--</div>
+      <div class="unit" id="countUnit">minuter</div>
+      <div class="after" id="afterText"></div>
     </section>
-
-    <section class="card maincard">
-      <div class="routeRow">
-        <label for="routeSelect">Färjeled</label>
-        <select id="routeSelect"></select>
-      </div>
-
-      <div class="presentation">Nästa avgång</div>
-      <div id="fromHarbor" class="fromHarbor">–</div>
-      <div id="nextDeparture" class="nextDeparture">--:--</div>
-
-      <div class="countWrap">
-        <div id="countValue" class="countValue">–</div>
-        <div id="countUnit" class="countUnit">minuter</div>
-      </div>
-    </section>
-
-    <section class="grid">
-      <button id="armBtn" class="primary" type="button">Aktivera larm</button>
-      <button id="wakeBtn" class="secondary" type="button">Håll skärmen vaken</button>
-      <button id="testFiveBtn" class="secondary" type="button">Test 5 min</button>
-      <button id="testDepartBtn" class="secondary" type="button">Test avgång</button>
-      <button id="refreshBtn" class="secondary" type="button">Hämta ny avgång</button>
-      <button id="settingsBtn" class="secondary" type="button">API-nyckel</button>
-    </section>
-
-    <section id="settings" class="settings hidden">
-      <label for="apiKey">Trafikverket API-nyckel</label>
-      <input id="apiKey" type="password" autocomplete="off" placeholder="Klistra in API-nyckel" />
-      <button id="saveKeyBtn" class="primary" type="button">Spara nyckel lokalt</button>
-      <p>Nyckeln sparas bara i denna webbläsare/enhet.</p>
-    </section>
-
-    <footer class="footer">
-      <span id="clock">--:--</span>
-      <span id="dataStatus">Ingen data hämtad</span>
-    </footer>
+    <aside class="side">
+      <section class="card statusCard">
+        <div class="statusRow first"><span>Trafikverket</span><b id="apiStatus" class="bad">Ej hämtad</b></div>
+        <div class="statusRow"><span>Ljud</span><b id="audioStatus">Tryck test</b></div>
+        <div class="statusRow"><span>Senast uppdaterad</span><b id="updatedText">--:--:--</b></div>
+        <div class="statusRow"><span>Efter avgång</span><b>60 sek</b></div>
+      </section>
+      <section class="btns">
+        <button class="btn secondary" id="testFive">Test 5 min · 3 glas</button>
+        <button class="btn secondary" id="testDepart">Test avgång · 5 glas</button>
+        <button class="btn dark" id="wakeBtn">Skärm vaken</button>
+        <button class="btn dark" id="settingsBtn">Inställningar</button>
+      </section>
+    </aside>
   </main>
 
-  <audio id="fiveAudio" preload="auto" src="media/sounds/five-minute-tyfon.wav"></audio>
-  <audio id="departAudio" preload="auto" src="media/sounds/departure-tyfon.wav"></audio>
+  <footer class="footer">
+    <div id="miniStatus">🟢 Avgångslarm aktivt</div>
+    <div class="version"><span class="bp"></span>Avgångslarm v2.2</div>
+  </footer>
+</div>
 
-  <script src="app.js"></script>
+<div class="selectPanel" id="selectPanel">
+  <h2>Välj färjeled</h2>
+  <select class="routeSelect" id="routeSelect"><option>Laddar leder…</option></select>
+  <button class="btn" id="saveRoute">Spara vald led</button>
+  <button class="btn dark" id="closeSettings">Stäng</button>
+</div>
+
+<script>
+'use strict';
+const API_KEY='24b95262774241ad8dbaf8ab05cf070a';
+const API_URL='https://api.trafikinfo.trafikverket.se/v2/data.json';
+const DEFAULT_ROUTE_ID=19; // Skenäsleden
+const VERSION='v2.2';
+let routeId=parseInt(localStorage.getItem('routeid')||DEFAULT_ROUTE_ID,10);
+let routeName=localStorage.getItem('routename')||'Skenäsleden';
+let nextDeparture=null, shownDepartureKey='', fivePlayedFor='', departPlayedFor='', lastFetch=0, fetching=false;
+let wakeLock=null, audioCtx=null;
+
+const $=id=>document.getElementById(id);
+const clock=$('clock'), routeTitle=$('routeTitle'), harborText=$('harborText'), departureTime=$('departureTime'), countValue=$('countValue'), countUnit=$('countUnit'), countLabel=$('countLabel'), afterText=$('afterText'), apiStatus=$('apiStatus'), audioStatus=$('audioStatus'), updatedText=$('updatedText'), miniStatus=$('miniStatus'), routeSelect=$('routeSelect'), selectPanel=$('selectPanel'), wakeBtn=$('wakeBtn');
+
+function pad(n){return String(n).padStart(2,'0')}
+function timeStr(d){return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`}
+function hmStr(d){return `${pad(d.getHours())}:${pad(d.getMinutes())}`}
+function updateClock(){clock.textContent=timeStr(new Date())}
+function setRouteName(name){routeName=name||routeName; routeTitle.textContent=`Nästa avgång – ${routeName}`; localStorage.setItem('routename',routeName)}
+
+async function postXml(xml){
+  const res=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/xml'},body:xml});
+  if(!res.ok) throw new Error('API status '+res.status);
+  return await res.json();
+}
+async function fetchRoutes(){
+  const xml=`<REQUEST><LOGIN authenticationkey="${API_KEY}"/><QUERY objecttype="FerryRoute" schemaversion="1.2" orderby="Name asc"><INCLUDE>Name</INCLUDE><INCLUDE>Id</INCLUDE></QUERY></REQUEST>`;
+  const data=await postXml(xml);
+  const arr=data?.RESPONSE?.RESULT?.[0]?.FerryRoute||[];
+  routeSelect.innerHTML='';
+  arr.forEach(r=>{const o=document.createElement('option');o.value=r.Id;o.textContent=r.Name;if(r.Id===routeId)o.selected=true;routeSelect.appendChild(o)});
+}
+async function fetchDeparture(force=false){
+  const now=Date.now(); if(fetching||(!force && now-lastFetch<25000)) return; fetching=true;
+  try{
+    const xml=`<REQUEST><LOGIN authenticationkey="${API_KEY}"/><QUERY limit="1" objecttype="FerryAnnouncement" schemaversion="1.2" orderby="DepartureTime"><FILTER><EQ name="Route.Id" value="${routeId}"/><GT name="DepartureTime" value="$now"/></FILTER><INCLUDE>DepartureTime</INCLUDE><INCLUDE>Route.Name</INCLUDE><INCLUDE>Route.Id</INCLUDE><INCLUDE>FromHarbor.Name</INCLUDE></QUERY></REQUEST>`;
+    const data=await postXml(xml);
+    const f=data?.RESPONSE?.RESULT?.[0]?.FerryAnnouncement?.[0];
+    if(!f) throw new Error('Ingen avgång i svar');
+    nextDeparture=new Date(f.DepartureTime);
+    shownDepartureKey=f.DepartureTime;
+    setRouteName(f.Route?.Name || routeName);
+    harborText.textContent=f.FromHarbor?.Name ? `Från ${f.FromHarbor.Name}` : 'Avgång hämtad';
+    departureTime.textContent=hmStr(nextDeparture);
+    apiStatus.textContent='OK'; apiStatus.className='ok'; miniStatus.textContent='🟢 Trafikverket OK';
+    updatedText.textContent=timeStr(new Date()); lastFetch=now;
+    fivePlayedFor=''; departPlayedFor='';
+  }catch(e){apiStatus.textContent='Fel'; apiStatus.className='bad'; miniStatus.textContent='🔴 Trafikverket ej tillgängligt'; console.error(e)}
+  finally{fetching=false;}
+}
+
+function ensureAudio(){
+  if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==='suspended') audioCtx.resume();
+  audioStatus.textContent='OK'; audioStatus.className='ok';
+  return audioCtx;
+}
+function bellStrike(t, gain=0.95){
+  const ctx=ensureAudio();
+  const master=ctx.createGain(); master.gain.setValueAtTime(0.0001,t); master.gain.exponentialRampToValueAtTime(gain,t+0.018); master.gain.exponentialRampToValueAtTime(0.0001,t+1.9); master.connect(ctx.destination);
+  const freqs=[520,790,1040,1320,1780]; const gains=[0.65,0.34,0.22,0.14,0.08];
+  freqs.forEach((f,i)=>{const o=ctx.createOscillator(); const g=ctx.createGain(); o.type=i<2?'sine':'triangle'; o.frequency.setValueAtTime(f,t); if(i>0)o.detune.setValueAtTime((i%2?7:-9),t); g.gain.setValueAtTime(gains[i],t); g.gain.exponentialRampToValueAtTime(0.0001,t+1.55+(i*.08)); o.connect(g); g.connect(master); o.start(t); o.stop(t+2.0)});
+}
+function playGlas(n){
+  const ctx=ensureAudio(); const start=ctx.currentTime+0.05;
+  for(let i=0;i<n;i++) bellStrike(start+i*1.05,0.9);
+}
+function playFive(){playGlas(3)}
+function playDepart(){playGlas(5)}
+
+function renderCountdown(){
+  updateClock();
+  if(!nextDeparture){countValue.textContent='--'; countUnit.textContent='minuter'; return;}
+  const diffMs=nextDeparture.getTime()-Date.now();
+  const sec=Math.ceil(diffMs/1000);
+  const key=shownDepartureKey;
+  countValue.classList.remove('red','minus'); afterText.textContent='';
+  if(sec<=300 && sec>0 && fivePlayedFor!==key){playFive(); fivePlayedFor=key;}
+  if(sec<=0 && departPlayedFor!==key){playDepart(); departPlayedFor=key;}
+  if(sec<0 && sec>=-60){
+    countLabel.textContent='Avgång passerad'; countValue.textContent='-'+pad(Math.abs(sec)); countUnit.textContent='sekunder'; countValue.classList.add('minus'); afterText.textContent='Ny avgång hämtas efter 60 sekunder'; return;
+  }
+  if(sec<-60){fetchDeparture(true); return;}
+  countLabel.textContent='Tid kvar';
+  if(sec<=120){countValue.textContent=String(Math.max(0,sec)); countUnit.textContent='sekunder';}
+  else{countValue.textContent=String(Math.ceil(sec/60)); countUnit.textContent='minuter';}
+  if(sec<=300) countValue.classList.add('red');
+}
+async function requestWake(){
+  try{ if('wakeLock' in navigator){ wakeLock=await navigator.wakeLock.request('screen'); wakeBtn.textContent='Skärm vaken ✓'; }}catch(e){wakeBtn.textContent='Skärm vaken saknas'}
+}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&wakeLock)requestWake()});
+
+$('testFive').addEventListener('click',()=>playFive());
+$('testDepart').addEventListener('click',()=>playDepart());
+wakeBtn.addEventListener('click',requestWake);
+$('settingsBtn').addEventListener('click',async()=>{selectPanel.classList.add('open'); await fetchRoutes();});
+$('closeSettings').addEventListener('click',()=>selectPanel.classList.remove('open'));
+$('saveRoute').addEventListener('click',()=>{routeId=parseInt(routeSelect.value,10); const name=routeSelect.options[routeSelect.selectedIndex]?.textContent||''; localStorage.setItem('routeid',routeId); setRouteName(name); selectPanel.classList.remove('open'); nextDeparture=null; fetchDeparture(true);});
+routeTitle.addEventListener('click',async()=>{selectPanel.classList.add('open'); await fetchRoutes();});
+document.body.addEventListener('click',()=>{try{ensureAudio()}catch(e){}},{once:true});
+
+setRouteName(routeName);
+updateClock(); setInterval(renderCountdown,1000); setInterval(()=>fetchDeparture(false),30000); fetchDeparture(true); fetchRoutes().catch(()=>{});
+</script>
 </body>
 </html>
