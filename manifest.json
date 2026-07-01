@@ -1,11 +1,15 @@
 {
   "name": "BluePeterDeparture",
   "short_name": "Avgång",
-  "start_url": "./",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#061a2f",
-  "theme_color": "#061a2f",
+  "background_color": "#06162b",
+  "theme_color": "#06162b",
   "icons": [
-    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"}
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }
