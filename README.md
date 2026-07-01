@@ -1,17 +1,17 @@
-# Avgångslarm v2.2
+# BluePeterDeparture v2.3
 
-Statisk webbapp för GitHub Pages.
+Privat webbapp för avgångsnedräkning.
 
-## Innehåll
-- `index.html` – hela appen
-- `manifest.json` – hemskärmsnamn och app-läge
-- `icon-512.png` – Blue Peter-ikon
+## v2.3
 
-## v2.2
-- Tar bort knappen "Larm aktivt"
-- Grön nedräkning över 5 minuter
-- Röd nedräkning vid 5 minuter eller mindre
-- Visar minussekunder i 60 sekunder efter avgång
-- Större klocka uppe till höger
-- Fartygsklocka: 3 glas vid 5 minuter, 5 glas vid avgång
-- Blue Peter-ikon, namn på hemskärm: Avgång
+- Mobilanpassad för iPhone stående och liggande
+- Responsiv layout för mindre iPad-fönster
+- Dagläge/nattläge under Inställningar
+- Val av färjeled sparas direkt, utan extra knapp
+- 5 glas en gång vid 5 minuter kvar
+- 3 glas en gång vid avgång
+- Tyst mellan larmen
+- Minussekunder i 60 sekunder efter avgång
+- Visar korrekt tid till nästa avgång efter minusminuten
+- Blue Peter-ikon
+- Versionstext: ⚓ BluePeterDeparture v2.3
